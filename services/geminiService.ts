@@ -3,7 +3,7 @@ import { GoogleGenAI } from "@google/genai";
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
 
-export const getDesignAdvice = async (userPrompt: string, history: any[]) => {
+export const getDesignAdvice = async (userPrompt: string, history: any[]): Promise<string> => {
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
@@ -23,7 +23,7 @@ export const getDesignAdvice = async (userPrompt: string, history: any[]) => {
   }
 };
 
-export const generateProductPitch = async (productName: string, category: string) => {
+export const generateProductPitch = async (productName: string, category: string): Promise<string | null> => {
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
@@ -32,7 +32,7 @@ export const generateProductPitch = async (productName: string, category: string
         temperature: 0.9,
       }
     });
-    return response.text;
+    return response.text || null;
   } catch (error) {
     return null;
   }
